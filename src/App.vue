@@ -1,0 +1,65 @@
+<template>    
+    <div id="app">
+        <div v-show="showTitleBar" id="electron-titlebar" class="drag titlebar"><span class="title"> Apollo </span></div>
+        <div class="content">
+            <router-view v-on:toggleOverlay="toggleOverlay"  v-on:toggleTitleBar="toggleTitleBar"></router-view>
+        </div>
+    </div>
+</template>
+
+<script>
+
+export default {
+    name: 'app',
+    data () {
+        return {
+            showTitleBar: true
+        }
+    },
+    methods: {
+        toggleTitleBar () {            
+            this.showTitleBar = !this.showTitleBar
+            
+            this.resizeOverlay()
+        },
+        toggleOverlay (isOverlay) {            
+            window.ipcRenderer.send('overlay', isOverlay)
+
+            if (isOverlay) {
+                this.resizeOverlay()
+            }
+        },
+        resizeOverlay() {
+            if (this.showTitleBar) {
+                window.ipcRenderer.send('reize', {width: 275, height: 85})
+            }else {
+                window.ipcRenderer.send('reize', {width: 275, height: 45})
+            }
+        }
+    }
+}
+</script>
+
+<style lang="less">
+    @import './less/colors';
+
+    .titlebar {
+        background-color: @lightblack;
+        height: 30px !important;
+    }
+    .title {
+        padding: 6px 7px;
+        display: block;
+        text-align: left;
+        font-size: 12px;
+    }
+    .content {
+        padding-top: 30px;
+    }
+    body, html {
+        background-color: @lightblack;
+        color: @lightgray;
+        display: flex;
+        flex-direction: column;
+    }
+</style>
