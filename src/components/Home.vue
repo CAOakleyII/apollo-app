@@ -75,7 +75,7 @@ export default {
                 spotifyTokenRef.on('value', (s)=>{
                     
                     let spotify = s.val();                 
-                    if (!spotify.access_token || !spotify.refresh_token) {
+                    if (!spotify || !spotify.access_token || !spotify.refresh_token) {
                         this.spotifyAuthUrl = spotifyApi.createAuthorizeURL(scopes, user.uid);
                         this.spotifyUser = undefined;
                     } else {

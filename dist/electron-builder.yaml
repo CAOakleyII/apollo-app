@@ -1,0 +1,20 @@
+directories:
+  output: dist
+  buildResources: build
+appId: 'com.electron.${name}'
+productName: Apollo
+copyright: 'Copyright © 2018 ${author}'
+mac:
+  target: dmg
+win:
+  target:
+    - target: msi
+      arch:
+        - x64
+        - ia32
+linux:
+  target:
+    - target: deb
+    - target: apk
+    - target: tar.gz
+electronVersion: 1.7.12

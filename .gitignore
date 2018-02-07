@@ -1,2 +1,5 @@
 node_modules
 scripts/bundle.js
+dist/win-ia32-unpacked
+dist/win-unpacked
+dist/*.msi

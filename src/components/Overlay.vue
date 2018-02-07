@@ -6,10 +6,10 @@
                 <div class="player__track_title">
                     {{track.item.name}} 
                     <span class="player__control-btn player__save-track" v-if="!is_saved" @click="onAddToSaved(track.item.id)"> 
-                        <i class="far fa-plus-square"></i>
+                        <i class="fas fa-plus-circle"></i>
                     </span>
                     <span class="player__control-btn player__remove-track" v-if="is_saved" @click="onRemoveFromSaved(track.item.id)">                        
-                        <i  class="far fa-check-square"></i>
+                        <i  class="fas fa-check-circle"></i>
                     </span>
                 </div>
                 <div class="player__track_artist">
