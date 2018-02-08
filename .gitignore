@@ -5,3 +5,5 @@ dist/win-unpacked/
 dist/*.exe
 dist/*.zip
 dist/*.msi
+dist/*.nupkg
+dist/Releases/

@@ -1,23 +1,50 @@
-const {app, BrowserWindow, ipcMain} = require('electron')
+const {app, BrowserWindow, ipcMain, autoUpdater} = require('electron')
 const path = require('path')
 const url = require('url')
 const ElectronTitlebarWindows = require('electron-titlebar-windows')
+const isDev = require('electron-is-dev')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
+let index = isDev ? "index.dev.html" : "index.html";
+
+if (!isDev) {
+  const server = 'http://updater.apolloverlay.com'
+  const feed = `${server}/update/${process.platform}/${app.getVersion()}`
+
+  autoUpdater.setFeedURL(feed)
+
+  setInterval(() => {
+    autoUpdater.checkForUpdates()
+  }, 60 * 1000)
+}
+
+autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+  const dialogOpts = {
+    type: 'info',
+    buttons: ['Restart', 'Later'],
+    title: 'Application Update',
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+  }
+
+  dialog.showMessageBox(dialogOpts, (response) => {
+    if (response === 0) autoUpdater.quitAndInstall()
+  })
+})
 
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({ width: 450, height: 500, alwaysOnTop: false, frame: false, transparent: true, 
     webPreferences: {
-      devTools: false
+      devTools: isDev
     }
   });
   win.setMenu(null)
   // and load the index.html of the app.
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
+    pathname: path.join(__dirname, index),
     protocol: 'file:',
     slashes: true
   }))

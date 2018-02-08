@@ -1,6 +1,6 @@
 {
     "name": "apollo",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Spotify Overlay",
     "author": "Chris Oakley <caoakleyii@gmail.com>",
     "main": "app.js",
@@ -9,54 +9,53 @@
         "build": "webpack",
         "start": "electron .",
         "pack": "webpack && electron-builder --dir",
-        "dist": "webpack && electron-builder"  
+        "dist": "webpack && electron-builder"
     },
     "build": {
-        "appId" : "com.electron.${name}",
-        "productName" : "Apollo",
+        "appId": "com.electron.${name}",
+        "productName": "Apollo",
         "copyright": "Copyright © 2018 ${author}",
         "directories": {
-            "output" : "dist"
+            "output": "dist"
         },
         "mac": {
             "target": "dmg"
         },
         "win": {
             "target": [
-              {
-                "target": "msi",
-                "arch": [
-                  "x64",
-                  "ia32"
-                ]
-              },
-              {
-                "target": "zip",
-                "arch": [
-                  "x64",
-                  "ia32"
-                ]
-              },
-              {
-                "target": "portable",
-                "arch": [
-                  "x64",
-                  "ia32"
-                ]
-              }
-
+                {
+                    "target": "msi",
+                    "arch": [
+                        "x64",
+                        "ia32"
+                    ]
+                },
+                {
+                    "target": "zip",
+                    "arch": [
+                        "x64",
+                        "ia32"
+                    ]
+                },
+                {
+                    "target": "portable",
+                    "arch": [
+                        "x64",
+                        "ia32"
+                    ]
+                }
             ]
-          },
-        "linux" : { 
-            "target" : [
+        },
+        "linux": {
+            "target": [
                 {
-                    "target" : "deb"
+                    "target": "deb"
                 },
                 {
-                    "target" : "apk"
+                    "target": "apk"
                 },
                 {
-                    "target" : "tar.gz"
+                    "target": "tar.gz"
                 }
             ]
         }
@@ -88,6 +87,7 @@
         "webpack-merge": "^4.1.0"
     },
     "dependencies": {
+        "electron-is-dev": "^0.3.0",
         "electron-titlebar": "0.0.3",
         "electron-titlebar-windows": "^3.0.0",
         "firebase": "^4.9.1",
