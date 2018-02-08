@@ -1,0 +1,9 @@
+version: 0.2.1
+files:
+  - url: apollo-setup-0.2.1.exe
+    sha512: xWukayKQYWDl6WgeDPxID//wtGlLbCdaXrEvBdQaanyHhYgcvOxq3pw7UQ+wRcFtel1UXngEbXqdOqLykCLKVA==
+    size: 188484963
+path: Apollo Setup 0.2.1.exe
+sha512: xWukayKQYWDl6WgeDPxID//wtGlLbCdaXrEvBdQaanyHhYgcvOxq3pw7UQ+wRcFtel1UXngEbXqdOqLykCLKVA==
+sha2: b3f0e44f9c9f76d6accf2d3f187a7b16a6f124364e60be27449f155fefc86800
+releaseDate: '2018-02-08T08:53:31.259Z'

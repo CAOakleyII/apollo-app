@@ -1,4 +1,5 @@
-const {app, BrowserWindow, ipcMain, autoUpdater} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
+const { autoUpdater } = require('electron-updater')
 const path = require('path')
 const url = require('url')
 const ElectronTitlebarWindows = require('electron-titlebar-windows')
@@ -9,32 +10,11 @@ const isDev = require('electron-is-dev')
 let win
 let index = isDev ? "index.dev.html" : "index.html";
 
-if (!isDev) {
-  const server = 'http://updater.apolloverlay.com'
-  const feed = `${server}/update/${process.platform}/${app.getVersion()}`
-
-  autoUpdater.setFeedURL(feed)
-
-  setInterval(() => {
-    autoUpdater.checkForUpdates()
-  }, 60 * 1000)
-}
-
-autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-    type: 'info',
-    buttons: ['Restart', 'Later'],
-    title: 'Application Update',
-    message: process.platform === 'win32' ? releaseNotes : releaseName,
-    detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+function createWindow () {
+  if (!isDev) {
+    autoUpdater.checkForUpdatesAndNotify();
   }
 
-  dialog.showMessageBox(dialogOpts, (response) => {
-    if (response === 0) autoUpdater.quitAndInstall()
-  })
-})
-
-function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({ width: 450, height: 500, alwaysOnTop: false, frame: false, transparent: true, 
     webPreferences: {

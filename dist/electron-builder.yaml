@@ -1,22 +1,22 @@
 directories:
   output: dist
   buildResources: build
-appId: 'com.electron.${name}'
+appId: com.electron.Apollo
 productName: Apollo
-copyright: 'Copyright © 2018 ${author}'
+copyright: Copyright © 2018 Christopher Oakley
+publish:
+  - provider: generic
+    url: 'http://updater.apolloverlay.com/download'
+  - provider: github
 mac:
   target: dmg
 win:
+  publish:
+    - provider: generic
+      url: 'http://updater.apolloverlay.com/download'
+    - provider: github
   target:
-    - target: msi
-      arch:
-        - x64
-        - ia32
-    - target: zip
-      arch:
-        - x64
-        - ia32
-    - target: portable
+    - target: nsis
       arch:
         - x64
         - ia32

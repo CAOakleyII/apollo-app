@@ -1,6 +1,6 @@
 {
     "name": "apollo",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "Spotify Overlay",
     "author": "Chris Oakley <caoakleyii@gmail.com>",
     "main": "app.js",
@@ -9,41 +9,46 @@
         "build": "webpack",
         "start": "electron .",
         "pack": "webpack && electron-builder --dir",
-        "dist": "webpack && electron-builder"
+        "dist": "webpack && electron-builder",
+        "release":  "webpack && build"
     },
     "build": {
-        "appId": "com.electron.${name}",
+        "appId": "com.electron.Apollo",
         "productName": "Apollo",
-        "copyright": "Copyright © 2018 ${author}",
+        "copyright": "Copyright © 2018 Christopher Oakley",
         "directories": {
             "output": "dist"
         },
+        "publish": [
+            {
+                "provider": "generic",
+                "url": "http://updater.apolloverlay.com/download"
+            },
+            {
+                "provider": "github"
+            }
+        ],
         "mac": {
             "target": "dmg"
         },
         "win": {
+            "publish": [
+                {
+                    "provider": "generic",
+                    "url": "http://updater.apolloverlay.com/download"
+                },
+                {
+                    "provider": "github"
+                }
+            ],
             "target": [
                 {
-                    "target": "msi",
+                    "target": "nsis",
                     "arch": [
                         "x64",
                         "ia32"
                     ]
-                },
-                {
-                    "target": "zip",
-                    "arch": [
-                        "x64",
-                        "ia32"
-                    ]
-                },
-                {
-                    "target": "portable",
-                    "arch": [
-                        "x64",
-                        "ia32"
-                    ]
-                }
+                }                
             ]
         },
         "linux": {
@@ -90,6 +95,7 @@
         "electron-is-dev": "^0.3.0",
         "electron-titlebar": "0.0.3",
         "electron-titlebar-windows": "^3.0.0",
+        "electron-updater": "^2.20.1",
         "firebase": "^4.9.1",
         "spotify-web-api-node": "^2.5.0",
         "vue": "^2.5.13",

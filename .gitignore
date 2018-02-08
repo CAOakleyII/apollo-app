@@ -7,3 +7,5 @@ dist/*.zip
 dist/*.msi
 dist/*.nupkg
 dist/Releases/
+dist/github/
+dist/*.blockmap
