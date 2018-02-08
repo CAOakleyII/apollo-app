@@ -209,7 +209,20 @@ export default {
             font-size: 10px;
             overflow-x: hidden;
             white-space: nowrap;
-            width: 125px
+            width: 125px;
+            -webkit-transition: 3.3s;
+            -moz-transition: 3.3s;
+            transition: 3.3s;
+            -webkit-transition-timing-function: linear;
+            -moz-transition-timing-function: linear;
+            transition-timing-function: linear;
+            display: inline-block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            &:hover {
+                margin-left: -125px;
+                width: 250px;
+            }
         }
         &__controls{
             display: flex;
