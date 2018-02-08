@@ -1,6 +1,6 @@
 <template>    
     <div id="app">
-        <div v-show="showTitleBar" id="electron-titlebar" class="drag titlebar"><span class="title"> Apollo </span></div>
+        <div v-show="showTitleBar" id="electron-titlebar" class="drag titlebar"><span class="title"> <img class="title-bar-logo" src="images/white_logo_transparent_inline.svg" /> </span></div>
         <div class="content">
             <router-view v-on:toggleOverlay="toggleOverlay"  v-on:toggleTitleBar="toggleTitleBar"></router-view>
         </div>
@@ -52,6 +52,10 @@ export default {
         display: block;
         text-align: left;
         font-size: 12px;
+    }
+    .title-bar-logo {
+        width: 60px;
+        display: inline-block;
     }
     .content {
         padding-top: 30px;

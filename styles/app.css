@@ -4,10 +4,26 @@ body {
  font-family: 'Ubuntu', sans-serif;
  background-color: #272727;
 }
+
 @keyframes spinner {
     to {transform: rotate(360deg);}
 }
 
+.logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 500px;
+}
+.logo-img {
+    width: 240px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 149.47px;
+}
+.startup-spinner:before {
+    margin-top: 120px !important;
+}
 .spinner:before {
     content: '';
     box-sizing: border-box;

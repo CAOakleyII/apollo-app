@@ -4,7 +4,9 @@
             <img class="player__album_art" :src="track.item.album.images[0].url" />
             <div class="player__track_info">
                 <div class="player__track_title">
-                    {{track.item.name}} 
+                    <span class="player__track_title_name"> 
+                        {{track.item.name}} 
+                    </span>
                     <span class="player__control-btn player__save-track" v-if="!is_saved" @click="onAddToSaved(track.item.id)"> 
                         <i class="fas fa-plus-circle"></i>
                     </span>
@@ -181,10 +183,33 @@ export default {
         &__track_title {
             color: white;
             font-size: 12px;
+            overflow-x: hidden;
+            white-space: nowrap;
+            width: 125px;
+            text-overflow: ellipsis;   
+        }
+        &__track_title_name {
+            width: 100px;
+            -webkit-transition: 3.3s;
+            -moz-transition: 3.3s;
+            transition: 3.3s;
+            -webkit-transition-timing-function: linear;
+            -moz-transition-timing-function: linear;
+            transition-timing-function: linear;
+            display: inline-block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            &:hover {
+                margin-left: -100px;
+                width: 200px;
+            }
         }
         &__track_artist {
             color: @lightgray;
             font-size: 10px;
+            overflow-x: hidden;
+            white-space: nowrap;
+            width: 125px
         }
         &__controls{
             display: flex;
