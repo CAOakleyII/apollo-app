@@ -7,7 +7,7 @@
         </div>
         <div class="home-nav" v-if="user">
             <span class="nav-item" @click="onCollapseClick"><i class="fas fa-external-link-alt fa-flip-horizontal" ></i></span>            
-            <span class="logout-link nav-item" @click="onLogoutClick"> Log out </span>
+            <span class="logout-link nav-item" @click="onLogoutClick"> Logout </span>
         </div>
         <div class="settings" v-if="!spotifyUser&&spotifyAuthUrl">
             <a class="btn-connect-spotify" :href="spotifyAuthUrl" target="_blank"> <i class="fab fa-spotify"></i> Connect </a>            

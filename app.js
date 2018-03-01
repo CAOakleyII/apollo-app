@@ -10,10 +10,32 @@ const isDev = require('electron-is-dev')
 let win
 let index = isDev ? "index.dev.html" : "index.html";
 
+autoUpdater.on('checking-for-update', () => {
+  console.log('Checking for update...');
+})
+autoUpdater.on('update-available', (info) => {
+  console.log('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+  console.log('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+  console.log('Error in auto-updater. ' + err);
+})
+autoUpdater.on('download-progress', (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  console.log(log_message);
+})
+autoUpdater.on('update-downloaded', (info) => {
+  console.log('Update downloaded');
+});
+
 function createWindow () {
-  if (!isDev) {
-    autoUpdater.checkForUpdatesAndNotify();
-  }
+  
+    autoUpdater.checkForUpdates();
+  
 
   // Create the browser window.
   win = new BrowserWindow({ width: 450, height: 500, alwaysOnTop: false, frame: false, transparent: true, 
