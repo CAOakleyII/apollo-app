@@ -13,6 +13,9 @@ module.exports = {
           'process.env': {
               'NODE_ENV': '"production"'
           },
+          'site_domain': '"apolloverlay.com"',
+          'site_port': '"80"',
+          'site_scheme': '"http"',
           'api_domain': '"apolloverlay.com"',
           'api_port': '"80"',
           'api_scheme': '"http"'

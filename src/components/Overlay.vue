@@ -178,7 +178,8 @@ export default {
         }
         &__album_art {            
             width: 45px;
-            height: 45px;       
+            height: 45px;
+            z-index: 1;   
         }
         &__track_title {
             color: white;

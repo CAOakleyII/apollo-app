@@ -28,7 +28,7 @@ var scopes = ['playlist-read-private', 'playlist-read-collaborative', 'playlist-
     'user-library-read', 'user-library-modify', 'user-read-email', 'user-top-read', 'user-read-playback-state', 
     'user-modify-playback-state', 'user-read-currently-playing', 'user-read-recently-played'];
 
-var redirectUri = `${api_scheme}://${api_domain}:${api_port}/spotify/connect`;
+var redirectUri = `${site_scheme}://${site_domain}:${site_port}/spotify/connect`
 var clientId = '94daf1e6045745a48441e3eb9118649b';
 
 var  spotifyApi = new SpotifyWebApi({
