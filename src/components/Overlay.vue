@@ -1,7 +1,7 @@
 <template>
     <div class="player">
         <div v-if="track" class="player__current_track">
-            <img class="player__album_art" :src="track.item.album.images[0].url" />
+            <img class="player__album_art" v-if="track.item.album.images[0]" :src="track.item.album.images[0].url" />
             <div class="player__track_info">
                 <div class="player__track_title">
                     <span class="player__track_title_name"> 
@@ -31,13 +31,32 @@
                 </div>
             </div>
         </div>
-        
+        <div class="drop-down">
+            <span class="drop-down__button" @click="onDropDownClick"> 
+                <i v-if="!expanded" class="fas fa-chevron-down"></i>
+                <i v-if="expanded" class="fas fa-chevron-up"></i> 
+            </span>
+            <div v-if="expanded" class="drop-down__menu">
+                <component :is="current_view"></component>
+                <div class="drop-down__subNav">
+                    <ul>
+                        <li v-for="(view) in views" :class="{ active: current_view == view.component}" :key="view.name" @click="onSubNavViewClick(view)">
+                            <i :class="view.icon" ></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import * as firebase from 'firebase';
 import SpotifyWebApi from 'spotify-web-api-node';
+import Search from './Search';
+import Party from './Party';
+import Library from './Library';
+import Browse from './Browse';
 import { setInterval, setTimeout } from 'timers';
 
 let spotifyApi = new SpotifyWebApi();
@@ -49,7 +68,31 @@ export default {
         return {
             keysDown: [],
             track : undefined,
-            is_saved: false
+            is_saved: false,
+            expanded: false,
+            views: [
+                {
+                    name: "Browse",
+                    icon: "fas fa-archive",
+                    component: Browse
+                },
+                {
+                    name: "Party",
+                    icon: "fas fa-users",
+                    component: Party
+                },
+                {
+                    name: "Search",
+                    icon: "fas fa-search",
+                    component: Search
+                },
+                {
+                    name: "Library",
+                    icon: "fas fa-book",
+                    component: Library
+                }
+            ],
+            current_view: Search
         }
     },
     mounted() {
@@ -99,6 +142,9 @@ export default {
 
                 this.track = resp.body;
 
+                if (!this.track || !this.track.item) {
+                    return;
+                }
                 spotifyApi.containsMySavedTracks([this.track.item.id])
                     .then(resp => {                        
                         this.is_saved = resp.body[0];
@@ -144,6 +190,19 @@ export default {
         },
         onForwardClick() {
             spotifyApi.skipToNext();
+        },
+        onDropDownClick() {
+            if (!this.expanded) {
+                window.ipcRenderer.send('reize', {width: 300, height: window.outerHeight + 200})
+                this.expanded = true;
+            } else {
+                window.ipcRenderer.send('reize', {width: 300, height: window.outerHeight - 200})
+                this.expanded = false;
+            }
+        },
+        onSubNavViewClick(view) {
+            console.log(view);
+            this.current_view = view.component;
         }
     }
 }
@@ -161,7 +220,7 @@ export default {
     .content {
         padding-top: 0;
     }
-    .player{
+    .player {
         background-color: rgba(0, 0, 0, 0.79);
         width: 100%;
         border-radius: 0px;
@@ -234,6 +293,7 @@ export default {
         &__control-btn {
             align-self: center;
             &:hover {
+                color: @main;
                 cursor: pointer;
             }
         }
@@ -245,6 +305,57 @@ export default {
         }
         &__remove-track {
             color: @main;
+        }
+    }
+    .drop-down {
+        width: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &__button {
+            &:hover {
+                color: @main;
+                cursor: pointer;
+            }
+        }
+        &__menu {
+            position: fixed;
+            height: 200px;
+            width: 100%;
+            left: 0;
+            background-color: rgba(39,39,39, 0.7);
+            bottom: 0;
+        }
+        &__subNav {
+            position: fixed;
+            height: 25px;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                text-align: center;
+                border-top: 1px solid rgba(255,255,255,0.5);
+                li {
+                    padding-top: 2.5px;
+                    width: 22%;
+                    display: inline-block;
+                    border-right: 1px solid rgba(255,255,255,0.5);
+                    &:last-child { 
+                        border-right: 0px;
+                    }
+                    &.active {
+                        color: @main;
+                    }
+                    &:hover {
+                        color: @accent;
+                        cursor: pointer;
+                    }
+                }
+            }
         }
     }
 </style>

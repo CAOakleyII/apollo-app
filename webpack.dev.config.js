@@ -10,11 +10,13 @@ module.exports = {
     ],
     output: {
         path:  path.resolve(__dirname, 'public/scripts'),
+        publicPath: "http://localhost:8081/",
         filename: 'bundle.js',
     },
     devServer : {
       hot: true,
       contentBase: 'public/scripts',
+      publicPath: "http://localhost:80801/",
       port: 8081,
       https: false,
       historyApiFallback: true,

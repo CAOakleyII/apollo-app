@@ -26,14 +26,18 @@ export default {
             window.ipcRenderer.send('overlay', isOverlay)
 
             if (isOverlay) {
-                this.resizeOverlay()
+                if (this.showTitleBar) {
+                    window.ipcRenderer.send('reize', {width: 300, height: 75})
+                } else {
+                    window.ipcRenderer.send('reize', {width: 300, height: 45})
+                }
             }
         },
         resizeOverlay() {
             if (this.showTitleBar) {
-                window.ipcRenderer.send('reize', {width: 275, height: 85})
-            }else {
-                window.ipcRenderer.send('reize', {width: 275, height: 45})
+                window.ipcRenderer.send('reize', {width: 300, height: window.outerHeight + 30})
+            } else {
+                window.ipcRenderer.send('reize', {width: 300, height: window.outerHeight - 30})
             }
         }
     }

@@ -9,3 +9,4 @@ dist/*.nupkg
 dist/Releases/
 dist/github/
 dist/*.blockmap
+dist/mac
