@@ -323,7 +323,7 @@ export default {
             height: 200px;
             width: 100%;
             left: 0;
-            background-color: rgba(39,39,39, 0.7);
+            background-color: @lightblack;
             bottom: 0;
         }
         &__subNav {
