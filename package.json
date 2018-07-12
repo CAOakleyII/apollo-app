@@ -10,6 +10,7 @@
         "start": "electron .",
         "pack": "webpack && electron-builder --dir",
         "dist": "webpack && electron-builder",
+        "help": "node build/help.js",
         "release": "webpack && build"
     },
     "build": {
@@ -92,11 +93,13 @@
         "webpack-merge": "^4.1.0"
     },
     "dependencies": {
+        "chalk": "^2.4.1",
         "electron-is-dev": "^0.3.0",
         "electron-titlebar": "0.0.3",
         "electron-titlebar-windows": "^3.0.0",
         "electron-updater": "^2.20.1",
         "firebase": "^4.9.1",
+        "socket.io-client": "^2.1.1",
         "spotify-web-api-node": "^2.5.0",
         "vue": "^2.5.13",
         "vue-electron": "^1.0.6",
