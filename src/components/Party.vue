@@ -20,18 +20,20 @@
 <script>
 
 import * as firebase from 'firebase';
+import io from 'socket.io-client';
 
 export default {
   name: 'Party',
   data () {
     return {
+      socket: undefined,
       party: undefined,
       user : undefined,
       parties: []
     }
   },
   mounted() {
-    let user = firebase.auth().currentUser;``
+    let user = firebase.auth().currentUser;
     if (!user) {
         this.$router.push('/login')
         return;
@@ -53,7 +55,7 @@ export default {
       })
     },
     joinParty(id) {
-      this
+      this.socket = io(`${api_scheme}://${api_domain}:${api_port}/${id}`);
     },
     getParty(id) {
       this.$http.get(`${api_scheme}://${api_domain}:${api_port}/parties/${id}`).then(response => {
