@@ -72,11 +72,18 @@ export default {
       }
       this.$http.post(`${api_scheme}://${api_domain}:${api_port}/parties`, body).then(response => {
         let partyId = response.body
+
+        // upgrade connection to websockets.
+        const server = io(`${api_scheme}://${api_domain}:${api_port}`)
+
+        const party = io(`${api_scheme}://${api_domain}:${api_port}/${partyId}`)
+
         this.getParty(partyId)
 
       }, response => {
         // there was an error
       })
+      
     }
   }
 }
