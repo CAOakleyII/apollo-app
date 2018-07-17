@@ -201,7 +201,6 @@ export default {
             }
         },
         onSubNavViewClick(view) {
-            console.log(view);
             this.current_view = view.component;
         }
     }

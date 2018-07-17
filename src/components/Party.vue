@@ -20,12 +20,14 @@
 <script>
 
 import * as firebase from 'firebase';
+import netmsg from '../lib/net_msg';
 import io from 'socket.io-client';
 
 export default {
   name: 'Party',
   data () {
     return {
+      server: undefined,
       socket: undefined,
       party: undefined,
       user : undefined,
@@ -54,15 +56,20 @@ export default {
         // error callback
       })
     },
-    joinParty(id) {
-      this.socket = io(`${api_scheme}://${api_domain}:${api_port}/${id}`);
-    },
     getParty(id) {
       this.$http.get(`${api_scheme}://${api_domain}:${api_port}/parties/${id}`).then(response => {
         this.party = response.body
       }, response => {
         // error retrieving partying
       })
+    },
+    sync() {
+      this.socket.emit('sync', netmsg.pack({
+        'id': this.$parent.track.item.id,
+        'timestamp': this.$parent.track.timestamp, 
+        'progress_ms': this.$parent.track.progress_ms
+        })
+      )
     },
     createParty() {
       let name = `${this.user.email.substring(0, this.user.email.lastIndexOf("@"))}'s Party`
@@ -74,16 +81,29 @@ export default {
         let partyId = response.body
 
         // upgrade connection to websockets.
-        const server = io(`${api_scheme}://${api_domain}:${api_port}`)
+        this.server = io(`${api_scheme}://${api_domain}:${api_port}`)
+        this.socket = io(`${api_scheme}://${api_domain}:${api_port}/${partyId}`)
 
-        const party = io(`${api_scheme}://${api_domain}:${api_port}/${partyId}`)
+        // since the user created the party we will assume they are host.
+        setTimeout(() => {
+            setInterval(() => {
+                this.sync();
+            }, 500)
+        }, 500)
 
-        this.getParty(partyId)
-
+        this.bindSocketEvents();
+        
       }, response => {
         // there was an error
-      })
-      
+      })      
+    },
+    joinParty(id) {
+      this.socket = io(`${api_scheme}://${api_domain}:${api_port}/${id}`);
+    },
+    bindSocketEvents() {
+      this.socket.on('sync', this.onSync.bind(this))
+      this.socket.on('queueTrack', this.onQueueTrack.bind(this))
+      this.socket.on('controlMusic', this.onControlMusic.bind(this))
     }
   }
 }
