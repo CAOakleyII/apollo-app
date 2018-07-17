@@ -91,14 +91,15 @@ export default {
             }, 500)
         }, 500)
 
-        this.bindSocketEvents();
-        
+        this.bindSocketEvents()        
       }, response => {
         // there was an error
       })      
     },
     joinParty(id) {
-      this.socket = io(`${api_scheme}://${api_domain}:${api_port}/${id}`);
+      this.socket = io(`${api_scheme}://${api_domain}:${api_port}/${id}`)
+
+      this.bindSocketEvents()
     },
     bindSocketEvents() {
       this.socket.on('sync', this.onSync.bind(this))
