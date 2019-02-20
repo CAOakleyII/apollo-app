@@ -13,6 +13,7 @@
       <p class="party__empty" v-else> You're not a part of any parties! <br /> Create or Join one. </p>
     </div>
     <div v-else>
+      You're in a party.
     </div>
   </div>
 </template>
@@ -49,6 +50,7 @@ export default {
   },
   methods: {
     getParties() {
+      console.log('get parties()')
       this.$http.get(`${api_scheme}://${api_domain}:${api_port}/parties/${this.user.uid}/my`).then(response => {
         console.log(response.body);
         this.parties = response.body
@@ -71,6 +73,19 @@ export default {
         })
       )
     },
+    onSync(packedMsg) {
+      let msg = netmsg.unpack(packedMsg)
+      
+      // if the incoming track is different than current track, change it
+      // if the incoming track is ~10seconds different, seek to timestamp
+      
+    },
+    onQueueTrack() {
+      throw new Error('onQueueTrack is not implemented')
+    },
+    onControlMusic() {
+      throw new Error('onControlMusic is not implemented')
+    },
     createParty() {
       let name = `${this.user.email.substring(0, this.user.email.lastIndexOf("@"))}'s Party`
       let body = {
@@ -91,15 +106,24 @@ export default {
             }, 500)
         }, 500)
 
-        this.bindSocketEvents()        
+        this.bindSocketEvents()
+
+        this.getParty(partyId)
+
       }, response => {
         // there was an error
       })      
     },
     joinParty(id) {
-      this.socket = io(`${api_scheme}://${api_domain}:${api_port}/${id}`)
-
-      this.bindSocketEvents()
+      // make sure socket.io room exists
+      let body =  {}
+      this.$http.post(`${api_scheme}://${api_domain}:${api_port}/parties/${id}/socket-room`, body).then(response => {
+        this.socket = io(`${api_scheme}://${api_domain}:${api_port}/${id}`)
+        this.bindSocketEvents()
+        this.getParty(id)
+      }, response => {
+        // there was an error
+      })      
     },
     bindSocketEvents() {
       this.socket.on('sync', this.onSync.bind(this))

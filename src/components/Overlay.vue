@@ -72,15 +72,16 @@ export default {
             expanded: false,
             views: [
                 {
+                    name: "Party",
+                    icon: "fas fa-users",
+                    component: Party
+                },/*
+                {
                     name: "Browse",
                     icon: "fas fa-archive",
                     component: Browse
                 },
-                {
-                    name: "Party",
-                    icon: "fas fa-users",
-                    component: Party
-                },
+                
                 {
                     name: "Search",
                     icon: "fas fa-search",
@@ -90,9 +91,9 @@ export default {
                     name: "Library",
                     icon: "fas fa-book",
                     component: Library
-                }
+                }*/
             ],
-            current_view: Search
+            current_view: Party
         }
     },
     mounted() {
