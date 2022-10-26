@@ -1,7 +1,7 @@
 
 <img src="http://apolloverlay.com/static/images/color_logo_transparent.png" width=300 />
 
-*An electron application, that allows you to control Spotify while you game.*
+*An electron application, that allows you to control Spotify and listen with others.*
 
 
 ## Running Dev
